@@ -1,4 +1,4 @@
-usethis::create_github_token(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)
+usethis::create_github_token()
 
 # Load the tidyverse package
 library(tidyverse)
