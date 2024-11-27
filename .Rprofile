@@ -6,6 +6,8 @@ library(ntpuR)
 
 setup_github_personal_access_token()
 
+usethis::create_github_token()
+
 # Load the tidyverse package if not already loaded
 library(tidyverse)
 
