@@ -5,7 +5,6 @@ library(tidyverse)
 # 讀取資料
 tidy_data <- read_csv("臺北市樂齡學習統計資料.csv")
 
-
 # 清理資料：移除千位分隔符與百分比符號，並轉換數字類型
 tidy_data <- tidy_data %>%
   mutate(
