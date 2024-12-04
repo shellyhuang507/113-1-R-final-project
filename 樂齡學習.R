@@ -1,5 +1,6 @@
 usethis::create_github_token()
 
+library(tidyverse)
 
 # 讀取資料
 tidy_data <- read_csv("臺北市樂齡學習統計資料.csv")
@@ -47,3 +48,4 @@ tidy_data %>%
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
