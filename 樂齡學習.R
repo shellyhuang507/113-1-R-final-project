@@ -1,3 +1,4 @@
+remotes::install_github("tpemartin/ntpuR")
 usethis::use_git_config(user.name = "shellyhuang507", user.email = "s411373018@gm.ntpu.edu.tw")
 
 library(tidyverse)
@@ -24,6 +25,7 @@ tidy_data <- tidy_data %>%
 gender_summary <- tidy_data %>%
   select(`名稱`, `女`, `男`) %>%
   pivot_longer(cols = c(`女`, `男`), names_to = "性別", values_to = "參與人數")
+
 
 # 視覺化：性別分布
 gender_summary %>%
