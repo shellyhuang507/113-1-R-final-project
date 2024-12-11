@@ -1,5 +1,5 @@
 remotes::install_github("tpemartin/ntpuR")
-usethis::use_git_config(user.name = "shellyhuang507", user.email = "s411373018@gm.ntpu.edu.tw")
+usethis::create_github_token(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)
 
 library(tidyverse)
 
