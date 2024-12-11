@@ -26,7 +26,6 @@ gender_summary <- tidy_data %>%
   select(`名稱`, `女`, `男`) %>%
   pivot_longer(cols = c(`女`, `男`), names_to = "性別", values_to = "參與人數")
 
-
 # 視覺化：性別分布
 gender_summary %>%
   ggplot(aes(x = `名稱`, y = 參與人數, fill = 性別)) +
