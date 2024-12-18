@@ -1,5 +1,5 @@
 remotes::install_github("tpemartin/ntpuR")
-usethis::create_github_token(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)
+usethis::create_github_token()
 
 library(tidyverse)
 
