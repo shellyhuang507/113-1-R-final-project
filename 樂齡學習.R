@@ -1,5 +1,3 @@
-remotes::install_github("tpemartin/ntpuR")
-
 library(tidyverse)
 
 # 讀取資料
