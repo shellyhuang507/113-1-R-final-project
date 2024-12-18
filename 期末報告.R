@@ -1,36 +1,48 @@
-usethis::create_github_token()
-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
-# Load the tidyverse package
 library(tidyverse)
 
-# Read the data
-tidy_data <- read_csv("Taipei_Learning_Statistics.csv")
+# 讀取資料
+tidy_data <- read_csv("臺北市樂齡學習統計資料.csv")
 
-# Data cleaning
+# 清理資料：移除千位分隔符與百分比符號，並轉換數字類型
 tidy_data <- tidy_data %>%
   mutate(
-    Female = as.numeric(str_replace_all(女, ",", "")),
-    Male = as.numeric(str_replace_all(男, ",", "")),
-    Total_Participants = as.numeric(str_replace_all(總人次, ",", "")),
-    Female_Rate = as.numeric(str_replace_all(女比率, "%", "")) / 100,
-    Male_Rate = as.numeric(str_replace_all(男比率, "%", "")) / 100
+    `女` = as.numeric(str_replace_all(`女`, ",", "")),
+    `男` = as.numeric(str_replace_all(`男`, ",", "")),
+    `總人次` = as.numeric(str_replace_all(`總人次`, ",", "")),
+    `場次` = as.numeric(`場次`),  # 確保場次是數字
+    `女比率` = as.numeric(str_replace_all(`女比率`, "%", "")) / 100,
+    `男比率` = as.numeric(str_replace_all(`男比率`, "%", "")) / 100
   )
 
-# Gender participation analysis
-tidy_gender_summary <- tidy_data %>%
-  select(Name = 名稱, Female, Male) %>%
-  pivot_longer(cols = c(Female, Male), names_to = "Gender", values_to = "Participants")
+# 計算每場次平均參與人數
+tidy_data <- tidy_data %>%
+  mutate(平均參與人數 = `總人次` / `場次`)
 
-# Plot gender participation as a bar chart
-tidy_gender_summary %>%
-  ggplot(aes(x = Name, y = Participants, fill = Gender)) +
+# 性別參與分析：轉換為長格式
+gender_summary <- tidy_data %>%
+  select(`名稱`, `女`, `男`) %>%
+  pivot_longer(cols = c(`女`, `男`), names_to = "性別", values_to = "參與人數")
+
+# 視覺化：性別分布
+gender_summary %>%
+  ggplot(aes(x = `名稱`, y = 參與人數, fill = 性別)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(
-    title = "Gender Participation Across Learning Centers",
-    x = "Learning Center",
-    y = "Number of Participants"
+    title = "各學習中心的性別參與分布",
+    x = "學習中心",
+    y = "參與人數"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-
+# 視覺化：平均參與人數效能比較
+tidy_data %>%
+  ggplot(aes(x = reorder(`名稱`, 平均參與人數), y = 平均參與人數)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(
+    title = "各學習中心的每場次平均參與人數",
+    x = "學習中心",
+    y = "平均參與人數"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
