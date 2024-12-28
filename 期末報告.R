@@ -44,6 +44,33 @@ tidy_data %>%
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+# 計算性別比例與總參與人次的關係
+tidy_data <- tidy_data %>%
+  mutate(
+    女性比例 = `女` / `總人次`,
+    男性比例 = `男` / `總人次`
+  )
+
+# 視覺化：性別比例與總參與人次
+tidy_data %>%
+  ggplot(aes(x = 女性比例, y = `總人次`)) +
+  geom_point(color = "blue", size = 3, alpha = 0.6) +
+  geom_smooth(method = "lm", color = "red", se = TRUE) +
+  labs(
+    title = "Relationship Between Female Proportion and Total Participation",
+    x = "Female Proportion",
+    y = "Total Participation"
+  ) +
+  theme_minimal()
+
+# 計算相關係數
+correlation <- tidy_data %>%
+  summarise(correlation = cor(女性比例, `總人次`, use = "complete.obs"))
+print(correlation)
+
+# 建立線性迴歸模型
+model <- lm(`總人次` ~ 女性比例, data = tidy_data)
+summary(model)
 
 
 
